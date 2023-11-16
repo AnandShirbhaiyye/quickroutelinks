@@ -15,6 +15,14 @@ async function connectMongoDB() {
 }
 connectMongoDB();
 
+//health api
+app.get("/health", (req, res) => {
+    res.json({
+      success: true,
+      message: "Hello Anand...🥳🥳",
+    });
+  });
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
