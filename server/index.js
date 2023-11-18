@@ -38,7 +38,9 @@ app.post("/link", async (req, res) => {
 
     return res.json({
       success: true,
-      data: savedLink,
+      data: {
+        shortUrl: `${process.env.BASE_URL}/${savedLink.slug}`,
+      },
       message: "Link saved successfully",
     });
   } catch (err) {
@@ -47,6 +49,21 @@ app.post("/link", async (req, res) => {
       message: err.message,
     });
   }
+});
+
+app.get("/:slug", async (req, res) => {
+  const { slug } = req.params;
+
+  const link = await Link.findOne({ slug: slug });
+
+  if (!link) {
+    return res.json({
+      success: false,
+      message: "link not found",
+    });
+  }
+
+  res.redirect(link.url);
 });
 
 const PORT = process.env.PORT || 5000;
