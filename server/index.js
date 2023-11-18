@@ -56,6 +56,10 @@ app.get("/:slug", async (req, res) => {
 
   const link = await Link.findOne({ slug: slug });
 
+  await Link.updateOne({slug: slug}, {$set: {
+    clicks: link.clicks + 1
+  }})
+
   if (!link) {
     return res.json({
       success: false,
