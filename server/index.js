@@ -56,9 +56,14 @@ app.get("/:slug", async (req, res) => {
 
   const link = await Link.findOne({ slug: slug });
 
-  await Link.updateOne({slug: slug}, {$set: {
-    clicks: link.clicks + 1
-  }})
+  await Link.updateOne(
+    { slug: slug },
+    {
+      $set: {
+        clicks: link.clicks + 1,
+      },
+    }
+  );
 
   if (!link) {
     return res.json({
@@ -68,6 +73,16 @@ app.get("/:slug", async (req, res) => {
   }
 
   res.redirect(link.url);
+});
+
+app.get("/links", async (req, res) => {
+  const links = await Link.find({});
+
+  return res.json({
+    success: true,
+    data: links,
+    message: "Links fetched successfully",
+  });
 });
 
 const PORT = process.env.PORT || 5000;
