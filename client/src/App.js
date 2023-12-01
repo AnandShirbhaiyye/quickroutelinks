@@ -35,7 +35,16 @@ function App() {
 
   useEffect(() => {
     loadLinks();
-  }, []);
+  }, [links]);
+
+  const deleteTask = async (id) => {
+    const { data } = await axios.delete(`/url/${id}`, {
+      id,
+    });
+    swal("Good job!", data?.message, "success");
+    loadLinks();
+  };
+
   return (
     <>
       <div className="container">
@@ -121,6 +130,9 @@ function App() {
 
                       <div
                         className="delete-button"
+                        onClick={() => {
+                          deleteTask(link?._id);
+                        }}
                       >
                         {" "}
                         ❌
