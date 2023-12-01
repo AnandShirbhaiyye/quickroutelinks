@@ -85,6 +85,17 @@ app.get("/api/links", async (req, res) => {
   });
 });
 
+app.delete("/url/:id", async (req, res) => {
+  const { id } = req.params;
+
+  await Link.deleteOne({ _id: id });
+
+  res.json({
+    success: true,
+    message: "url deleted successfully...",
+  });
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
