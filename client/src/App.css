@@ -4,3 +4,19 @@
 .copy-img{
   cursor: pointer;
 }
+.url-container{
+  height: 350px;
+  overflow-y: scroll;
+  border: 1px solid gray;
+  border-radius: 10px;
+}
+.delete-button{
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  cursor: pointer;
+  background-color: whitesmoke;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 50%;
+}

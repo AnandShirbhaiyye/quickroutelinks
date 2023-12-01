@@ -75,13 +75,13 @@ app.get("/:slug", async (req, res) => {
   res.redirect(link.url);
 });
 
-app.get("/links", async (req, res) => {
+app.get("/api/links", async (req, res) => {
   const links = await Link.find({});
 
   return res.json({
     success: true,
     data: links,
-    message: "Links fetched successfully",
+    message: "links fetched successfully",
   });
 });
 

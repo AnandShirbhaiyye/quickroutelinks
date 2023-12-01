@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import CopyImg from "./copyimg.png";
 import axios from "axios";
@@ -8,6 +8,7 @@ function App() {
   const [url, setUrl] = useState("");
   const [slug, setSlug] = useState("");
   const [shortUrl, setShortUrl] = useState("");
+  const [links, setLinks] = useState([]);
 
   const generateLink = async () => {
     const response = await axios.post("/link", {
@@ -22,16 +23,29 @@ function App() {
     navigator.clipboard.writeText(shortUrl);
     swal("Good job!", "copy to clipboard", "success");
   };
+
+  const loadLinks = async () => {
+    try {
+      const response = await axios.get("/api/links");
+      setLinks(response?.data?.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    loadLinks();
+  }, []);
   return (
     <>
       <div className="container">
-        <div className="card shadow-lg mt-5 p-5">
+        <div className="card shadow-lg mt-3 p-5">
           <div className="text-center mb-4">
             <h2>Quick-Route-Links✅</h2>
           </div>
           <div className="row">
             <div className="col-md-6">
-              <div className="card shadow-sm p-3">
+              <div className="card shadow-sm p-3 mt-4">
                 <form>
                   <h4 className="text-center mt-3 mb-4">Link Generation🔗</h4>
                   <div className="mb-3">
@@ -88,8 +102,32 @@ function App() {
               </div>
             </div>
             <div className="col-md-6">
-              <div className="todo-container shadow-sm p-3 mt-2">
+              <div className="url-container shadow-sm p-3 mt-2">
                 <h4 className="text-center mt-2 mb-4">All Links📃</h4>
+                {links.map((link, index) => {
+                  const { url, slug, clicks } = link;
+                  return (
+                    <div className="card shadow-sm p-1 mt-2" key={index}>
+                      <p>
+                        <b>Full URL :</b> {url}
+                      </p>
+                      <p>
+                        <b>Short URL:</b> :{process.env.REACT_APP_BASE_URL}/
+                        {slug}
+                      </p>
+                      <p>
+                        <b>Clicks :</b> {clicks}
+                      </p>
+
+                      <div
+                        className="delete-button"
+                      >
+                        {" "}
+                        ❌
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
