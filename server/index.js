@@ -41,7 +41,7 @@ app.post("/link", async (req, res) => {
       data: {
         shortUrl: `${process.env.BASE_URL}/${savedLink.slug}`,
       },
-      message: "Link saved successfully",
+      message: "link saved successfully",
     });
   } catch (err) {
     return res.json({

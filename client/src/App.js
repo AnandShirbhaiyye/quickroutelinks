@@ -1,11 +1,27 @@
 import React, { useState } from "react";
 import "./App.css";
 import CopyImg from "./copyimg.png";
+import axios from "axios";
+import swal from "sweetalert";
 
 function App() {
   const [url, setUrl] = useState("");
   const [slug, setSlug] = useState("");
   const [shortUrl, setShortUrl] = useState("");
+
+  const generateLink = async () => {
+    const response = await axios.post("/link", {
+      url,
+      slug,
+    });
+
+    setShortUrl(response?.data?.data?.shortUrl);
+  };
+
+  const copyShortUrl = () => {
+    navigator.clipboard.writeText(shortUrl);
+    swal("Good job!", "copy to clipboard", "success");
+  };
   return (
     <>
       <div className="container">
@@ -53,10 +69,19 @@ function App() {
                       </div>
                     </div>
                     <div className="col-md-2">
-                      <img src={CopyImg} alt="copyimg" className="copy-img img-fluid" />
+                      <img
+                        src={CopyImg}
+                        alt="copyimg"
+                        className="copy-img img-fluid"
+                        onClick={copyShortUrl}
+                      />
                     </div>
                   </div>
-                  <button className="btn btn-dark w-100 mb-3" type="button">
+                  <button
+                    className="btn btn-dark w-100 mb-3"
+                    type="button"
+                    onClick={generateLink}
+                  >
                     <b>Do Magic🪄</b>
                   </button>
                 </form>
