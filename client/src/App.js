@@ -1,6 +1,11 @@
+import React, { useState } from "react";
 import "./App.css";
+import CopyImg from "./copyimg.png";
 
 function App() {
+  const [url, setUrl] = useState("");
+  const [slug, setSlug] = useState("");
+  const [shortUrl, setShortUrl] = useState("");
   return (
     <>
       <div className="container">
@@ -18,6 +23,10 @@ function App() {
                       type="text"
                       className="form-control"
                       placeholder="Enter URL"
+                      value={url}
+                      onChange={(e) => {
+                        setUrl(e.target.value);
+                      }}
                     />
                   </div>
                   <div className="mb-3">
@@ -25,14 +34,27 @@ function App() {
                       type="text"
                       className="form-control"
                       placeholder="Enter Slug (optional)"
+                      value={slug}
+                      onChange={(e) => {
+                        setSlug(e.target.value);
+                      }}
                     />
                   </div>
-                  <div className="mb-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Short URL"
-                    />
+                  <div className="row">
+                    <div className="col-md-10">
+                      <div className="mb-3">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Short URL"
+                          value={shortUrl}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-2">
+                      <img src={CopyImg} alt="copyimg" className="copy-img img-fluid" />
+                    </div>
                   </div>
                   <button className="btn btn-dark w-100 mb-3" type="button">
                     <b>Do Magic🪄</b>
