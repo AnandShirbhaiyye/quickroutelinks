@@ -121,7 +121,7 @@ function App() {
                         <b>Full URL :</b> {url}
                       </p>
                       <p>
-                        <b>Short URL:</b> :{process.env.REACT_APP_BASE_URL}/
+                        <b>Short URL:</b> {process.env.REACT_APP_BASE_URL}/
                         {slug}
                       </p>
                       <p>
